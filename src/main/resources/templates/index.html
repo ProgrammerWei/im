@@ -1,0 +1,43 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Test20</title>
+    <link th:href="@{bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{bootstrap/css/bootstrap-theme.min.css}" rel="stylesheet" />
+    <audio id="myaudio" th:src="@{im.wav}"></audio>
+</head>
+<body  userName="zhangwei" ws="yes">
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">用户</h3>
+    </div>
+    <div class="panel-body">
+        <span th:text="${singlePerson.name}"></span>
+        <span id="chat-log"></span>
+    </div>
+</div>
+<div th:if="${not #lists.isEmpty(people)}">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">聊天</h3>
+        </div>
+        <div class="panel-body">
+            <input id="msginput"/>
+            <button class="btn" th:onclick="'sendWs();'">发送</button>
+        </div>
+    </div>
+</div>
+<script th:src="@{jquery-3.3.1.js}" type="text/javascript"></script>
+<script th:src="@{bootstrap/js/bootstrap.min.js}" type="text/javascript"></script>
+<script th:src="@{ws.js}" type="text/javascript"></script>
+<script th:inline="javascript">
+    var single = [[${singlePerson}]];
+    console.log(single.name+"/"+single.age);
+    function sendWs() {
+        $.post("http://localhost:8080/sendWs",{message:$('#msginput').val()},function(result){
+            // console.log(result);
+        });
+    }
+</script>
+</body>
+</html>
